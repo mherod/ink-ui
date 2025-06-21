@@ -22,6 +22,7 @@ import {
 	PasswordInput,
 	ProgressBar,
 	RadioGroup,
+	SearchInput,
 	Select,
 	Spinner,
 	StatusMessage,
@@ -50,6 +51,7 @@ type ComponentName =
 	| 'PasswordInput'
 	| 'ProgressBar'
 	| 'RadioGroup'
+	| 'SearchInput'
 	| 'Select'
 	| 'Spinner'
 	| 'StatusMessage'
@@ -397,7 +399,11 @@ function CheckboxPreview() {
 			<Text bold color="blue">
 				Checkbox Component
 			</Text>
-			<Checkbox label="Enable notifications" checked={checked} onChange={setChecked} />
+			<Checkbox
+				label="Enable notifications"
+				checked={checked}
+				onChange={setChecked}
+			/>
 			<Text>Status: {checked ? 'Checked' : 'Unchecked'}</Text>
 		</Box>
 	);
@@ -464,7 +470,11 @@ function ModalPreview() {
 			</Text>
 			<Text>Press 'm' to open modal</Text>
 			{isOpen && (
-				<Modal onClose={() => setIsOpen(false)}>
+				<Modal
+					onClose={() => {
+						setIsOpen(false);
+					}}
+				>
 					<Text>This is a modal dialog!</Text>
 				</Modal>
 			)}
@@ -559,7 +569,9 @@ function ToastPreview() {
 				<Toast
 					message="This is a toast message!"
 					variant="success"
-					onClose={() => setShowToast(false)}
+					onClose={() => {
+						setShowToast(false);
+					}}
 				/>
 			)}
 		</Box>
@@ -656,6 +668,50 @@ function ComponentPreview({
 
 			case 'UnorderedList': {
 				return <UnorderedListPreview />;
+			}
+
+			case 'Checkbox': {
+				return <CheckboxPreview />;
+			}
+
+			case 'CodeBlock': {
+				return <CodeBlockPreview />;
+			}
+
+			case 'FileInput': {
+				return <FileInputPreview />;
+			}
+
+			case 'Menu': {
+				return <MenuPreview />;
+			}
+
+			case 'Modal': {
+				return <ModalPreview />;
+			}
+
+			case 'RadioGroup': {
+				return <RadioGroupPreview />;
+			}
+
+			case 'Switch': {
+				return <SwitchPreview />;
+			}
+
+			case 'Table': {
+				return <TablePreview />;
+			}
+
+			case 'Tabs': {
+				return <TabsPreview />;
+			}
+
+			case 'Toast': {
+				return <ToastPreview />;
+			}
+
+			case 'Tree': {
+				return <TreePreview />;
 			}
 		}
 	};
