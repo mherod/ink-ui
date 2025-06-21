@@ -3,6 +3,7 @@ import deepmerge from 'deepmerge';
 import alertTheme from './components/alert/theme.js';
 import badgeTheme from './components/badge/theme.js';
 import confirmInputTheme from './components/confirm-input/theme.js';
+import datePickerTheme from './components/date-picker/theme.js';
 import multiSelectTheme from './components/multi-select/theme.js';
 import orderedListTheme from './components/ordered-list/theme.js';
 import progressBarTheme from './components/progress-bar/theme.js';
@@ -30,6 +31,7 @@ export const defaultTheme: Theme = {
 		Alert: alertTheme,
 		Badge: badgeTheme,
 		ConfirmInput: confirmInputTheme,
+		DatePicker: datePickerTheme,
 		MultiSelect: multiSelectTheme,
 		OrderedList: orderedListTheme,
 		ProgressBar: progressBarTheme,

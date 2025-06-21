@@ -1,3 +1,14 @@
 node_modules
 build
 .tsimp
+
+# IDE configs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -262,7 +262,10 @@ export const useSelectState = ({
 
 	const [lastOptions, setLastOptions] = useState(options);
 
-	if (options !== lastOptions && !isDeepStrictEqual(options, lastOptions)) {
+	if (
+		options !== lastOptions &&
+		JSON.stringify(options) !== JSON.stringify(lastOptions)
+	) {
 		dispatch({
 			type: 'reset',
 			state: createDefaultState({visibleOptionCount, defaultValue, options}),

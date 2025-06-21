@@ -1,5 +1,6 @@
 export * from './components/badge/index.js';
 export * from './components/confirm-input/index.js';
+export * from './components/date-picker/index.js';
 export * from './components/unordered-list/index.js';
 export * from './components/multi-select/index.js';
 export * from './components/progress-bar/index.js';

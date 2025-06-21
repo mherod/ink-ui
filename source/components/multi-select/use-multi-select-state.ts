@@ -290,7 +290,10 @@ export const useMultiSelectState = ({
 
 	const [lastOptions, setLastOptions] = useState(options);
 
-	if (options !== lastOptions && !isDeepStrictEqual(options, lastOptions)) {
+	if (
+		options !== lastOptions &&
+		JSON.stringify(options) !== JSON.stringify(lastOptions)
+	) {
 		dispatch({
 			type: 'reset',
 			state: createDefaultState({visibleOptionCount, defaultValue, options}),
@@ -331,7 +334,7 @@ export const useMultiSelectState = ({
 	}, [options, state.visibleFromIndex, state.visibleToIndex]);
 
 	useEffect(() => {
-		if (!isDeepStrictEqual(state.previousValue, state.value)) {
+		if (JSON.stringify(state.previousValue) !== JSON.stringify(state.value)) {
 			onChange?.(state.value);
 		}
 	}, [state.previousValue, state.value, options, onChange]);
