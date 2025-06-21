@@ -6,6 +6,7 @@ import checkboxTheme from './components/checkbox/theme.js';
 import codeBlockTheme from './components/code-block/theme.js';
 import confirmInputTheme from './components/confirm-input/theme.js';
 import datePickerTheme from './components/date-picker/theme.js';
+import fileInputTheme from './components/file-input/theme.js';
 import menuTheme from './components/menu/theme.js';
 import modalTheme from './components/modal/theme.js';
 import multiSelectTheme from './components/multi-select/theme.js';
@@ -44,6 +45,7 @@ export const defaultTheme: Theme = {
 		CodeBlock: codeBlockTheme,
 		ConfirmInput: confirmInputTheme,
 		DatePicker: datePickerTheme,
+		FileInput: fileInputTheme,
 		Menu: menuTheme,
 		Modal: modalTheme,
 		MultiSelect: multiSelectTheme,

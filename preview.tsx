@@ -9,50 +9,83 @@ import {render, Box, Text, useInput} from 'ink';
 import {
 	Alert,
 	Badge,
+	Checkbox,
+	CodeBlock,
 	ConfirmInput,
 	DatePicker,
 	EmailInput,
+	FileInput,
+	Menu,
+	Modal,
 	MultiSelect,
 	OrderedList,
 	PasswordInput,
 	ProgressBar,
+	RadioGroup,
 	Select,
 	Spinner,
 	StatusMessage,
+	Switch,
+	Table,
+	Tabs,
 	TextInput,
+	Toast,
+	Tree,
 	UnorderedList,
 } from './source/index.js';
 
 type ComponentName =
 	| 'Alert'
 	| 'Badge'
+	| 'Checkbox'
+	| 'CodeBlock'
 	| 'ConfirmInput'
 	| 'DatePicker'
 	| 'EmailInput'
+	| 'FileInput'
+	| 'Menu'
+	| 'Modal'
 	| 'MultiSelect'
 	| 'OrderedList'
 	| 'PasswordInput'
 	| 'ProgressBar'
+	| 'RadioGroup'
 	| 'Select'
 	| 'Spinner'
 	| 'StatusMessage'
+	| 'Switch'
+	| 'Table'
+	| 'Tabs'
 	| 'TextInput'
+	| 'Toast'
+	| 'Tree'
 	| 'UnorderedList';
 
 const components: ComponentName[] = [
 	'Alert',
 	'Badge',
+	'Checkbox',
+	'CodeBlock',
 	'ConfirmInput',
 	'DatePicker',
 	'EmailInput',
+	'FileInput',
+	'Menu',
+	'Modal',
 	'MultiSelect',
 	'OrderedList',
 	'PasswordInput',
 	'ProgressBar',
+	'RadioGroup',
 	'Select',
 	'Spinner',
 	'StatusMessage',
+	'Switch',
+	'Table',
+	'Tabs',
 	'TextInput',
+	'Toast',
+	'Tree',
 	'UnorderedList',
 ];
 
@@ -352,6 +385,204 @@ function UnorderedListPreview() {
 					<Text>Third item</Text>
 				</UnorderedList.Item>
 			</UnorderedList>
+		</Box>
+	);
+}
+
+function CheckboxPreview() {
+	const [checked, setChecked] = useState(false);
+
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Checkbox Component
+			</Text>
+			<Checkbox label="Enable notifications" checked={checked} onChange={setChecked} />
+			<Text>Status: {checked ? 'Checked' : 'Unchecked'}</Text>
+		</Box>
+	);
+}
+
+function CodeBlockPreview() {
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				CodeBlock Component
+			</Text>
+			<CodeBlock language="javascript">
+				{`function hello(name) {
+  console.log('Hello, ' + name);
+}`}
+			</CodeBlock>
+		</Box>
+	);
+}
+
+function FileInputPreview() {
+	const [selectedFile, setSelectedFile] = useState<string>('');
+
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				FileInput Component
+			</Text>
+			<FileInput placeholder="Select a file..." onChange={setSelectedFile} />
+			<Text>Selected: {selectedFile}</Text>
+		</Box>
+	);
+}
+
+function MenuPreview() {
+	const [selectedItem, setSelectedItem] = useState('');
+
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Menu Component
+			</Text>
+			<Menu
+				items={[
+					{label: 'New File', value: 'new'},
+					{label: 'Open File', value: 'open'},
+					{label: 'Save File', value: 'save'},
+					{label: 'Exit', value: 'exit'},
+				]}
+				onSelect={setSelectedItem}
+			/>
+			<Text>Selected: {selectedItem}</Text>
+		</Box>
+	);
+}
+
+function ModalPreview() {
+	const [isOpen, setIsOpen] = useState(false);
+
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Modal Component
+			</Text>
+			<Text>Press 'm' to open modal</Text>
+			{isOpen && (
+				<Modal onClose={() => setIsOpen(false)}>
+					<Text>This is a modal dialog!</Text>
+				</Modal>
+			)}
+		</Box>
+	);
+}
+
+function RadioGroupPreview() {
+	const [selectedValue, setSelectedValue] = useState('');
+
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				RadioGroup Component
+			</Text>
+			<RadioGroup
+				options={[
+					{label: 'Option 1', value: 'option1'},
+					{label: 'Option 2', value: 'option2'},
+					{label: 'Option 3', value: 'option3'},
+				]}
+				value={selectedValue}
+				onChange={setSelectedValue}
+			/>
+			<Text>Selected: {selectedValue}</Text>
+		</Box>
+	);
+}
+
+function SwitchPreview() {
+	const [enabled, setEnabled] = useState(false);
+
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Switch Component
+			</Text>
+			<Switch label="Enable feature" checked={enabled} onChange={setEnabled} />
+			<Text>Status: {enabled ? 'Enabled' : 'Disabled'}</Text>
+		</Box>
+	);
+}
+
+function TablePreview() {
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Table Component
+			</Text>
+			<Table
+				data={[
+					{name: 'Alice', age: 25, city: 'New York'},
+					{name: 'Bob', age: 30, city: 'San Francisco'},
+					{name: 'Charlie', age: 35, city: 'Chicago'},
+				]}
+			/>
+		</Box>
+	);
+}
+
+function TabsPreview() {
+	const [activeTab, setActiveTab] = useState('tab1');
+
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Tabs Component
+			</Text>
+			<Tabs
+				tabs={[
+					{id: 'tab1', label: 'Tab 1', content: <Text>Content for Tab 1</Text>},
+					{id: 'tab2', label: 'Tab 2', content: <Text>Content for Tab 2</Text>},
+					{id: 'tab3', label: 'Tab 3', content: <Text>Content for Tab 3</Text>},
+				]}
+				activeTab={activeTab}
+				onTabChange={setActiveTab}
+			/>
+		</Box>
+	);
+}
+
+function ToastPreview() {
+	const [showToast, setShowToast] = useState(false);
+
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Toast Component
+			</Text>
+			<Text>Press 't' to show toast</Text>
+			{showToast && (
+				<Toast
+					message="This is a toast message!"
+					variant="success"
+					onClose={() => setShowToast(false)}
+				/>
+			)}
+		</Box>
+	);
+}
+
+function TreePreview() {
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Tree Component
+			</Text>
+			<Tree
+				data={[
+					{
+						label: 'Root',
+						children: [
+							{label: 'Child 1'},
+							{label: 'Child 2', children: [{label: 'Grandchild'}]},
+						],
+					},
+				]}
+			/>
 		</Box>
 	);
 }

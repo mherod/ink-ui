@@ -3,6 +3,7 @@ export * from './components/checkbox/index.js';
 export * from './components/code-block/index.js';
 export * from './components/confirm-input/index.js';
 export * from './components/date-picker/index.js';
+export * from './components/file-input/index.js';
 export * from './components/unordered-list/index.js';
 export * from './components/menu/index.js';
 export * from './components/modal/index.js';
