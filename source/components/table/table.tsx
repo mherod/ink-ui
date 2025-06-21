@@ -2,6 +2,7 @@ import React from 'react';
 import {Box, Text} from 'ink';
 import {useComponentTheme} from '../../theme.js';
 import {type Theme} from './theme.js';
+import {TableColumnComponent} from './table-column.js';
 
 export type TableColumn<T = any> = {
 	/**
@@ -66,47 +67,75 @@ export function Table<T = any>({
 }: TableProps<T>) {
 	const {styles} = useComponentTheme<Theme>('Table');
 
-	const getColumnWidth = (column: TableColumn<T>, totalWidth: number) => {
-		if (column.width === 'auto') {
-			const fixedColumns = columns.filter(col => typeof col.width === 'number');
-			const fixedWidth = fixedColumns.reduce(
-				(sum, col) => sum + (col.width as number),
-				0,
-			);
-			const autoColumns = columns.filter(col => col.width === 'auto').length;
-			return Math.floor((totalWidth - fixedWidth) / autoColumns);
+	// Calculate minimum width needed for each column based on content
+	const calculateMinColumnWidth = (column: TableColumn<T>) => {
+		let maxWidth = column.title.length + 4; // Header width + padding (1 on each side + 2 extra)
+
+		// Check all data rows for this column
+		for (const record of data) {
+			const value = record[column.key as keyof T];
+			let contentLength: number;
+
+			if (column.render) {
+				const rendered = column.render(value, record, 0);
+				contentLength = React.isValidElement(rendered)
+					? String(value).length
+					: String(rendered).length;
+			} else if (value === null || value === undefined) {
+				contentLength = 0;
+			} else if (typeof value === 'object') {
+				if (Array.isArray(value)) {
+					contentLength = `[${value.length} items]`.length;
+				} else {
+					const keys = Object.keys(value);
+					contentLength =
+						keys.length === 0
+							? 2
+							: `{${keys.slice(0, 2).join(', ')}${keys.length > 2 ? '...' : ''}}`
+									.length;
+				}
+			} else {
+				contentLength = String(value).length;
+			}
+
+			maxWidth = Math.max(maxWidth, contentLength + 4); // Content + padding (1 on each side + 2 extra)
 		}
 
-		return column.width ?? 12;
+		return Math.max(4, maxWidth); // Minimum 4 characters
 	};
 
-	const totalWidth = 60; // Default table width
+	// Calculate column widths based on content or explicit width
+	const getColumnWidth = (column: TableColumn<T>) => {
+		if (column.width === 'auto') {
+			return calculateMinColumnWidth(column);
+		}
 
-	const renderCell = (
-		column: TableColumn<T>,
-		value: any,
-		record: T,
-		index: number,
-	) => {
-		const width = getColumnWidth(column, totalWidth);
-		const content = column.render
-			? column.render(value, record, index)
-			: String(value ?? '');
-		const stringContent = String(content ?? '');
+		const explicitWidth = column.width ?? 12;
+		const minNeeded = calculateMinColumnWidth(column);
 
-		// Truncate if too long
-		const truncated =
-			stringContent.length > width
-				? stringContent.slice(0, width - 3) + '...'
-				: stringContent;
+		return Math.max(explicitWidth, minNeeded);
+	};
 
-		// Pad to width
-		const padded = truncated.padEnd(width);
+	const renderHeaderSeparator = () => {
+		if (!isBordered) return null;
 
 		return (
-			<Text {...styles.cell()} key={column.key}>
-				{padded}
-			</Text>
+			<Box flexDirection="row">
+				{columns.map((column, index) => {
+					const width = getColumnWidth(column);
+					const isLast = index === columns.length - 1;
+
+					return (
+						<Box key={`sep-${column.key}`} width={width}>
+							<Text>
+								{index === 0 ? '├' : ''}
+								{'─'.repeat(width - (index === 0 ? 1 : 0) - (isLast ? 1 : 1))}
+								{isLast ? '┤' : '┼'}
+							</Text>
+						</Box>
+					);
+				})}
+			</Box>
 		);
 	};
 
@@ -115,14 +144,41 @@ export function Table<T = any>({
 			? styles.headerRow()
 			: styles.dataRow({isEven: rowIndex % 2 === 0, striped: isStriped});
 
-		return (
-			<Box key={isHeader ? 'header' : rowIndex} {...rowStyle}>
+		const row = (
+			<Box
+				key={isHeader ? 'header' : rowIndex}
+				{...rowStyle}
+				flexDirection="row"
+				height={1}
+			>
 				{columns.map(column => {
 					const value = isHeader ? column.title : record[column.key as keyof T];
-					return renderCell(column, value, record, rowIndex);
+
+					return (
+						<TableColumnComponent
+							key={column.key}
+							column={column}
+							value={value}
+							record={record}
+							index={rowIndex}
+							isHeader={isHeader}
+							width={getColumnWidth(column)}
+						/>
+					);
 				})}
 			</Box>
 		);
+
+		if (isHeader) {
+			return (
+				<>
+					{row}
+					{renderHeaderSeparator()}
+				</>
+			);
+		}
+
+		return row;
 	};
 
 	const borderStyle = isBordered ? 'single' : undefined;
