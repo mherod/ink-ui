@@ -20,7 +20,7 @@ export function useSpinner({type = 'dots'}: UseSpinnerProps): UseSpinnerResult {
 	const spinner = spinners[type];
 
 	useEffect(() => {
-		const timer = setInterval(() => {
+		const timer = globalThis.setInterval(() => {
 			setFrame(previousFrame => {
 				const isLastFrame = previousFrame === spinner.frames.length - 1;
 				return isLastFrame ? 0 : previousFrame + 1;
@@ -28,7 +28,7 @@ export function useSpinner({type = 'dots'}: UseSpinnerProps): UseSpinnerResult {
 		}, spinner.interval);
 
 		return () => {
-			clearInterval(timer);
+			globalThis.clearInterval(timer);
 		};
 	}, [spinner]);
 

@@ -58,7 +58,6 @@ const components: ComponentName[] = [
 
 function ComponentMenu({
 	selectedIndex,
-	onSelect,
 }: {
 	readonly selectedIndex: number;
 	readonly onSelect: (component: ComponentName) => void;
