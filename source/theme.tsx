@@ -1,5 +1,6 @@
 import React, {type ReactNode, createContext, useContext} from 'react';
 import deepmerge from 'deepmerge';
+import accordionTheme from './components/accordion/theme.js';
 import alertTheme from './components/alert/theme.js';
 import badgeTheme from './components/badge/theme.js';
 import checkboxTheme from './components/checkbox/theme.js';
@@ -40,6 +41,7 @@ export type ComponentStyles = Record<string, unknown>;
 
 export const defaultTheme: Theme = {
 	components: {
+		Accordion: accordionTheme,
 		Alert: alertTheme,
 		Badge: badgeTheme,
 		Checkbox: checkboxTheme,

@@ -177,9 +177,7 @@ export function SearchInput({
 		const groups: Record<string, SearchResult[]> = {};
 		for (const result of filteredResults) {
 			const category = result.category ?? 'Other';
-			if (!groups[category]) {
-				groups[category] = [];
-			}
+			groups[category] ||= [];
 
 			groups[category].push(result);
 		}

@@ -7,6 +7,7 @@
 import React, {useState, useCallback} from 'react';
 import {render, Box, Text, useInput} from 'ink';
 import {
+	Accordion,
 	Alert,
 	Badge,
 	Checkbox,
@@ -36,6 +37,7 @@ import {
 } from './source/index.js';
 
 type ComponentName =
+	| 'Accordion'
 	| 'Alert'
 	| 'Badge'
 	| 'Checkbox'
@@ -64,6 +66,7 @@ type ComponentName =
 	| 'UnorderedList';
 
 const components: ComponentName[] = [
+	'Accordion',
 	'Alert',
 	'Badge',
 	'Checkbox',
@@ -79,6 +82,7 @@ const components: ComponentName[] = [
 	'PasswordInput',
 	'ProgressBar',
 	'RadioGroup',
+	'SearchInput',
 	'Select',
 	'Spinner',
 	'StatusMessage',
@@ -115,6 +119,38 @@ function ComponentMenu({selectedIndex}: {readonly selectedIndex: number}) {
 					</Text>
 				))}
 			</Box>
+		</Box>
+	);
+}
+
+function AccordionPreview() {
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Accordion Component
+			</Text>
+			<Accordion
+				hasMultiple
+				hasBorders
+				items={[
+					{
+						key: 'item1',
+						title: 'Section 1',
+						content: <Text>This is the content for section 1</Text>,
+						isDefaultExpanded: true,
+					},
+					{
+						key: 'item2',
+						title: 'Section 2',
+						content: <Text>This is the content for section 2</Text>,
+					},
+					{
+						key: 'item3',
+						title: 'Section 3',
+						content: <Text>This is the content for section 3</Text>,
+					},
+				]}
+			/>
 		</Box>
 	);
 }
@@ -401,7 +437,7 @@ function CheckboxPreview() {
 			</Text>
 			<Checkbox
 				label="Enable notifications"
-				checked={checked}
+				isChecked={checked}
 				onChange={setChecked}
 			/>
 			<Text>Status: {checked ? 'Checked' : 'Unchecked'}</Text>
@@ -425,15 +461,18 @@ function CodeBlockPreview() {
 }
 
 function FileInputPreview() {
-	const [selectedFile, setSelectedFile] = useState<string>('');
+	const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
 
 	return (
 		<Box flexDirection="column" gap={1}>
 			<Text bold color="blue">
 				FileInput Component
 			</Text>
-			<FileInput placeholder="Select a file..." onChange={setSelectedFile} />
-			<Text>Selected: {selectedFile}</Text>
+			<FileInput
+				placeholder="Select files..."
+				onFilesChange={setSelectedFiles}
+			/>
+			<Text>Selected: {selectedFiles.join(', ')}</Text>
 		</Box>
 	);
 }
@@ -448,12 +487,14 @@ function MenuPreview() {
 			</Text>
 			<Menu
 				items={[
-					{label: 'New File', value: 'new'},
-					{label: 'Open File', value: 'open'},
-					{label: 'Save File', value: 'save'},
-					{label: 'Exit', value: 'exit'},
+					{key: 'new', label: 'New File'},
+					{key: 'open', label: 'Open File'},
+					{key: 'save', label: 'Save File'},
+					{key: 'exit', label: 'Exit'},
 				]}
-				onSelect={setSelectedItem}
+				onSelect={item => {
+					setSelectedItem(item.label);
+				}}
 			/>
 			<Text>Selected: {selectedItem}</Text>
 		</Box>
@@ -469,15 +510,15 @@ function ModalPreview() {
 				Modal Component
 			</Text>
 			<Text>Press 'm' to open modal</Text>
-			{isOpen && (
-				<Modal
-					onClose={() => {
-						setIsOpen(false);
-					}}
-				>
-					<Text>This is a modal dialog!</Text>
-				</Modal>
-			)}
+			<Modal
+				isOpen={isOpen}
+				title="Example Modal"
+				onClose={() => {
+					setIsOpen(false);
+				}}
+			>
+				<Text>This is a modal dialog!</Text>
+			</Modal>
 		</Box>
 	);
 }
@@ -512,7 +553,11 @@ function SwitchPreview() {
 			<Text bold color="blue">
 				Switch Component
 			</Text>
-			<Switch label="Enable feature" checked={enabled} onChange={setEnabled} />
+			<Switch
+				label="Enable feature"
+				isChecked={enabled}
+				onChange={setEnabled}
+			/>
 			<Text>Status: {enabled ? 'Enabled' : 'Disabled'}</Text>
 		</Box>
 	);
@@ -525,6 +570,11 @@ function TablePreview() {
 				Table Component
 			</Text>
 			<Table
+				columns={[
+					{key: 'name', title: 'Name'},
+					{key: 'age', title: 'Age'},
+					{key: 'city', title: 'City'},
+				]}
 				data={[
 					{name: 'Alice', age: 25, city: 'New York'},
 					{name: 'Bob', age: 30, city: 'San Francisco'},
@@ -544,13 +594,25 @@ function TabsPreview() {
 				Tabs Component
 			</Text>
 			<Tabs
-				tabs={[
-					{id: 'tab1', label: 'Tab 1', content: <Text>Content for Tab 1</Text>},
-					{id: 'tab2', label: 'Tab 2', content: <Text>Content for Tab 2</Text>},
-					{id: 'tab3', label: 'Tab 3', content: <Text>Content for Tab 3</Text>},
+				items={[
+					{
+						key: 'tab1',
+						label: 'Tab 1',
+						children: <Text>Content for Tab 1</Text>,
+					},
+					{
+						key: 'tab2',
+						label: 'Tab 2',
+						children: <Text>Content for Tab 2</Text>,
+					},
+					{
+						key: 'tab3',
+						label: 'Tab 3',
+						children: <Text>Content for Tab 3</Text>,
+					},
 				]}
-				activeTab={activeTab}
-				onTabChange={setActiveTab}
+				activeKey={activeTab}
+				onChange={setActiveTab}
 			/>
 		</Box>
 	);
@@ -567,13 +629,42 @@ function ToastPreview() {
 			<Text>Press 't' to show toast</Text>
 			{showToast && (
 				<Toast
-					message="This is a toast message!"
 					variant="success"
 					onClose={() => {
 						setShowToast(false);
 					}}
-				/>
+				>
+					This is a toast message!
+				</Toast>
 			)}
+		</Box>
+	);
+}
+
+function SearchInputPreview() {
+	const [searchValue, setSearchValue] = useState('');
+
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				SearchInput Component
+			</Text>
+			<SearchInput
+				hasInstantResults
+				placeholder="Search for files..."
+				results={[
+					{
+						id: '1',
+						label: 'package.json',
+						description: 'Project configuration',
+					},
+					{id: '2', label: 'src/app.tsx', description: 'Main application file'},
+					{id: '3', label: 'README.md', description: 'Project documentation'},
+				]}
+				maxResults={5}
+				onSearch={setSearchValue}
+			/>
+			<Text>Search query: "{searchValue}"</Text>
 		</Box>
 	);
 }
@@ -585,12 +676,17 @@ function TreePreview() {
 				Tree Component
 			</Text>
 			<Tree
-				data={[
+				nodes={[
 					{
+						key: 'root',
 						label: 'Root',
 						children: [
-							{label: 'Child 1'},
-							{label: 'Child 2', children: [{label: 'Grandchild'}]},
+							{key: 'child1', label: 'Child 1'},
+							{
+								key: 'child2',
+								label: 'Child 2',
+								children: [{key: 'grandchild', label: 'Grandchild'}],
+							},
 						],
 					},
 				]}
@@ -614,6 +710,10 @@ function ComponentPreview({
 
 	const renderComponent = () => {
 		switch (component) {
+			case 'Accordion': {
+				return <AccordionPreview />;
+			}
+
 			case 'Alert': {
 				return <AlertPreview />;
 			}
@@ -713,6 +813,10 @@ function ComponentPreview({
 			case 'Tree': {
 				return <TreePreview />;
 			}
+
+			case 'SearchInput': {
+				return <SearchInputPreview />;
+			}
 		}
 	};
 
@@ -759,7 +863,7 @@ function App() {
 			{selectedComponent ? (
 				<ComponentPreview component={selectedComponent} onBack={handleBack} />
 			) : (
-				<ComponentMenu selectedIndex={selectedIndex} onSelect={handleSelect} />
+				<ComponentMenu selectedIndex={selectedIndex} />
 			)}
 		</Box>
 	);
