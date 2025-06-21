@@ -729,14 +729,14 @@ function SliderPreview() {
 				Slider Component
 			</Text>
 			<Slider
+				hasValueDisplay
+				hasMinMaxLabels
 				label="Volume"
 				min={0}
 				max={100}
 				value={value}
-				onChange={setValue}
-				hasValueDisplay
-				hasMinMaxLabels
 				formatValue={val => `${val}%`}
+				onChange={setValue}
 			/>
 			<Text>Current value: {value}</Text>
 		</Box>

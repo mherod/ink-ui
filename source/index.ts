@@ -14,6 +14,7 @@ export * from './components/progress-bar/index.js';
 export * from './components/radio-group/index.js';
 export * from './components/search-input/index.js';
 export * from './components/select/select.js';
+export * from './components/separator/index.js';
 export * from './components/slider/index.js';
 export * from './components/spinner/index.js';
 export * from './components/switch/index.js';

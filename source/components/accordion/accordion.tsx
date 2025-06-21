@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect, useRef, useMemo} from 'react';
 import {Box, Text, useInput} from 'ink';
 import {useComponentTheme} from '../../theme.js';
 import {type Theme} from './theme.js';
@@ -113,10 +113,23 @@ export function Accordion({
 	});
 
 	const [selectedIndex, setSelectedIndex] = useState(0);
+	const [animatingItems, setAnimatingItems] = useState<
+		Map<
+			string,
+			{targetHeight: number; currentHeight: number; isExpanding: boolean}
+		>
+	>(new Map());
+	const animationTimersRef = useRef<
+		Map<string, ReturnType<typeof setInterval>>
+	>(new Map());
 
-	const expandedItemsSet = controlledExpandedItems
-		? new Set(controlledExpandedItems)
-		: internalExpandedItems;
+	const expandedItemsSet = useMemo(
+		() =>
+			controlledExpandedItems
+				? new Set(controlledExpandedItems)
+				: internalExpandedItems,
+		[controlledExpandedItems, internalExpandedItems],
+	);
 
 	const updateExpandedItems = useCallback(
 		(newExpandedItems: Set<string>) => {
@@ -125,6 +138,58 @@ export function Accordion({
 			}
 		},
 		[controlledExpandedItems],
+	);
+
+	const startAnimation = useCallback(
+		(itemKey: string, isExpanding: boolean) => {
+			const targetHeight = isExpanding ? 5 : 0;
+			const currentHeight = isExpanding ? 0 : 5;
+
+			setAnimatingItems(
+				prev =>
+					new Map(
+						prev.set(itemKey, {
+							targetHeight,
+							currentHeight,
+							isExpanding,
+						}),
+					),
+			);
+
+			const existingTimer = animationTimersRef.current.get(itemKey);
+			if (existingTimer) {
+				clearInterval(existingTimer);
+			}
+
+			const timer = setInterval(() => {
+				setAnimatingItems(prev => {
+					const current = prev.get(itemKey);
+					if (!current) return prev;
+
+					const newHeight = current.isExpanding
+						? Math.min(current.currentHeight + 1, current.targetHeight)
+						: Math.max(current.currentHeight - 1, current.targetHeight);
+
+					if (newHeight === current.targetHeight) {
+						clearInterval(timer);
+						animationTimersRef.current.delete(itemKey);
+						const newMap = new Map(prev);
+						newMap.delete(itemKey);
+						return newMap;
+					}
+
+					return new Map(
+						prev.set(itemKey, {
+							...current,
+							currentHeight: newHeight,
+						}),
+					);
+				});
+			}, 100);
+
+			animationTimersRef.current.set(itemKey, timer);
+		},
+		[],
 	);
 
 	const toggleItem = useCallback(
@@ -136,19 +201,32 @@ export function Accordion({
 
 			if (isCurrentlyExpanded) {
 				newExpanded.delete(item.key);
+				startAnimation(item.key, false);
 			} else {
 				if (!hasMultiple) {
-					// If not multiple, close all other items
+					for (const key of newExpanded) {
+						if (key !== item.key) {
+							startAnimation(key, false);
+						}
+					}
+
 					newExpanded.clear();
 				}
 
 				newExpanded.add(item.key);
+				startAnimation(item.key, true);
 			}
 
 			updateExpandedItems(newExpanded);
 			onToggle?.(item, !isCurrentlyExpanded);
 		},
-		[expandedItemsSet, hasMultiple, updateExpandedItems, onToggle],
+		[
+			expandedItemsSet,
+			hasMultiple,
+			updateExpandedItems,
+			onToggle,
+			startAnimation,
+		],
 	);
 
 	const navigateAccordion = useCallback(
@@ -170,6 +248,15 @@ export function Accordion({
 		[selectedIndex, items],
 	);
 
+	useEffect(() => {
+		const timersRef = animationTimersRef.current;
+		return () => {
+			for (const timer of timersRef.values()) {
+				clearInterval(timer);
+			}
+		};
+	}, []);
+
 	useInput((input, key) => {
 		if (key.upArrow) {
 			navigateAccordion('up');
@@ -186,6 +273,7 @@ export function Accordion({
 
 	const renderAccordionItem = (item: AccordionItem) => {
 		const isExpanded = expandedItemsSet.has(item.key);
+		const animatingItem = animatingItems.get(item.key);
 		const enabledItems = items.filter(enabledItem => !enabledItem.isDisabled);
 		const enabledIndex = enabledItems.findIndex(
 			enabledItem => enabledItem.key === item.key,
@@ -247,12 +335,14 @@ export function Accordion({
 				</Box>
 
 				{/* Content */}
-				{isExpanded && (
+				{(isExpanded || animatingItem) && (
 					<Box
 						{...styles.accordionContent({
 							size,
 						})}
 						flexDirection="column"
+						height={animatingItem ? animatingItem.currentHeight : undefined}
+						overflow="hidden"
 					>
 						{typeof item.content === 'string' ? (
 							<Text {...styles.contentText()}>{item.content}</Text>

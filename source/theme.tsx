@@ -17,6 +17,7 @@ import progressBarTheme from './components/progress-bar/theme.js';
 import radioGroupTheme from './components/radio-group/theme.js';
 import searchInputTheme from './components/search-input/theme.js';
 import selectTheme from './components/select/theme.js';
+import separatorTheme from './components/separator/theme.js';
 import sliderTheme from './components/slider/theme.js';
 import spinnerTheme from './components/spinner/theme.js';
 import statusMessageTheme from './components/status-message/theme.js';
@@ -60,6 +61,7 @@ export const defaultTheme: Theme = {
 		RadioGroup: radioGroupTheme,
 		SearchInput: searchInputTheme,
 		Select: selectTheme,
+		Separator: separatorTheme,
 		Slider: sliderTheme,
 		Spinner: spinnerTheme,
 		StatusMessage: statusMessageTheme,

@@ -183,6 +183,7 @@ function ComponentShowcase() {
 			<Box flexDirection="column" gap={1}>
 				<Text bold>Accordion Component:</Text>
 				<Accordion
+					hasMultiple
 					items={[
 						{
 							key: 'section1',
@@ -201,13 +202,12 @@ function ComponentShowcase() {
 							content: <Text>Advanced options and features</Text>,
 						},
 					]}
-					hasMultiple
 				/>
 			</Box>
 
 			<Box flexDirection="column" gap={1}>
 				<Text bold>Code Block:</Text>
-				<CodeBlock language="javascript" hasLineNumbers>
+				<CodeBlock hasLineNumbers language="javascript">
 					{`function greet(name) {
   return \`Hello, \${name}!\`;
 }
@@ -231,21 +231,21 @@ console.log(greet('World'));`}
 			<Box flexDirection="column" gap={1}>
 				<Text bold>Switch Controls:</Text>
 				<Box gap={3}>
-					<Switch label="Feature A" isDefaultChecked />
+					<Switch isDefaultChecked label="Feature A" />
 					<Switch label="Feature B" variant="success" />
-					<Switch label="Feature C" variant="warning" hasStateText />
+					<Switch hasStateText label="Feature C" variant="warning" />
 				</Box>
 			</Box>
 
 			<Box flexDirection="column" gap={1}>
 				<Text bold>Slider Control:</Text>
 				<Slider
+					hasValueDisplay
+					hasMinMaxLabels
 					label="Volume"
 					min={0}
 					max={100}
 					defaultValue={75}
-					hasValueDisplay
-					hasMinMaxLabels
 					formatValue={value => `${value}%`}
 				/>
 			</Box>
@@ -270,13 +270,13 @@ console.log(greet('World'));`}
 			<Box flexDirection="column" gap={1}>
 				<Text bold>Search Input:</Text>
 				<SearchInput
+					hasInstantResults
 					placeholder="Search files..."
 					results={[
 						{id: '1', label: 'package.json', description: 'Project config'},
 						{id: '2', label: 'README.md', description: 'Documentation'},
 						{id: '3', label: 'src/app.tsx', description: 'Main app file'},
 					]}
-					hasInstantResults
 					maxResults={3}
 				/>
 			</Box>
