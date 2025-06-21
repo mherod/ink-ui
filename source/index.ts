@@ -11,6 +11,7 @@ export * from './components/progress-bar/index.js';
 export * from './components/radio-group/index.js';
 export * from './components/select/select.js';
 export * from './components/spinner/index.js';
+export * from './components/switch/index.js';
 export * from './components/table/index.js';
 export * from './components/tabs/index.js';
 export * from './components/toast/index.js';

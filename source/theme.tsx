@@ -15,6 +15,7 @@ import radioGroupTheme from './components/radio-group/theme.js';
 import selectTheme from './components/select/theme.js';
 import spinnerTheme from './components/spinner/theme.js';
 import statusMessageTheme from './components/status-message/theme.js';
+import switchTheme from './components/switch/theme.js';
 import tableTheme from './components/table/theme.js';
 import tabsTheme from './components/tabs/theme.js';
 import toastTheme from './components/toast/theme.js';
@@ -52,6 +53,7 @@ export const defaultTheme: Theme = {
 		Select: selectTheme,
 		Spinner: spinnerTheme,
 		StatusMessage: statusMessageTheme,
+		Switch: switchTheme,
 		Table: tableTheme,
 		Tabs: tabsTheme,
 		Toast: toastTheme,
