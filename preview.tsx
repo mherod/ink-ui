@@ -10,6 +10,7 @@ import {
 	Accordion,
 	Alert,
 	Badge,
+	Breadcrumb,
 	Checkbox,
 	CodeBlock,
 	ConfirmInput,
@@ -25,6 +26,7 @@ import {
 	RadioGroup,
 	SearchInput,
 	Select,
+	Slider,
 	Spinner,
 	StatusMessage,
 	Switch,
@@ -40,6 +42,7 @@ type ComponentName =
 	| 'Accordion'
 	| 'Alert'
 	| 'Badge'
+	| 'Breadcrumb'
 	| 'Checkbox'
 	| 'CodeBlock'
 	| 'ConfirmInput'
@@ -55,6 +58,7 @@ type ComponentName =
 	| 'RadioGroup'
 	| 'SearchInput'
 	| 'Select'
+	| 'Slider'
 	| 'Spinner'
 	| 'StatusMessage'
 	| 'Switch'
@@ -69,6 +73,7 @@ const components: ComponentName[] = [
 	'Accordion',
 	'Alert',
 	'Badge',
+	'Breadcrumb',
 	'Checkbox',
 	'CodeBlock',
 	'ConfirmInput',
@@ -84,6 +89,7 @@ const components: ComponentName[] = [
 	'RadioGroup',
 	'SearchInput',
 	'Select',
+	'Slider',
 	'Spinner',
 	'StatusMessage',
 	'Switch',
@@ -695,6 +701,48 @@ function TreePreview() {
 	);
 }
 
+function BreadcrumbPreview() {
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Breadcrumb Component
+			</Text>
+			<Breadcrumb
+				items={[
+					{label: 'Home', icon: '🏠'},
+					{label: 'Projects', icon: '📁'},
+					{label: 'Web Development', icon: '💻'},
+					{label: 'ink-ui', icon: '🎨'},
+					{label: 'Components', icon: '🧩'},
+				]}
+			/>
+		</Box>
+	);
+}
+
+function SliderPreview() {
+	const [value, setValue] = useState(50);
+
+	return (
+		<Box flexDirection="column" gap={1}>
+			<Text bold color="blue">
+				Slider Component
+			</Text>
+			<Slider
+				label="Volume"
+				min={0}
+				max={100}
+				value={value}
+				onChange={setValue}
+				hasValueDisplay
+				hasMinMaxLabels
+				formatValue={val => `${val}%`}
+			/>
+			<Text>Current value: {value}</Text>
+		</Box>
+	);
+}
+
 function ComponentPreview({
 	component,
 	onBack,
@@ -720,6 +768,10 @@ function ComponentPreview({
 
 			case 'Badge': {
 				return <BadgePreview />;
+			}
+
+			case 'Breadcrumb': {
+				return <BreadcrumbPreview />;
 			}
 
 			case 'ConfirmInput': {
@@ -752,6 +804,10 @@ function ComponentPreview({
 
 			case 'Select': {
 				return <SelectPreview />;
+			}
+
+			case 'Slider': {
+				return <SliderPreview />;
 			}
 
 			case 'Spinner': {

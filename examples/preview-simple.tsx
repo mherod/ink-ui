@@ -7,16 +7,24 @@
 import React from 'react';
 import {render, Box, Text} from 'ink';
 import {
+	Accordion,
 	Alert,
 	Badge,
+	Breadcrumb,
 	Checkbox,
+	CodeBlock,
 	OrderedList,
 	ProgressBar,
+	RadioGroup,
+	SearchInput,
+	Slider,
 	Spinner,
 	StatusMessage,
+	Switch,
 	Table,
 	Tabs,
 	Toast,
+	Tree,
 	UnorderedList,
 } from '../source/index.js';
 
@@ -157,6 +165,119 @@ function ComponentShowcase() {
 							children: <Text>About content</Text>,
 						},
 					]}
+				/>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Breadcrumb Navigation:</Text>
+				<Breadcrumb
+					items={[
+						{label: 'Home', icon: '🏠'},
+						{label: 'Projects', icon: '📁'},
+						{label: 'Web Development', icon: '💻'},
+						{label: 'Current Project', icon: '🎨'},
+					]}
+				/>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Accordion Component:</Text>
+				<Accordion
+					items={[
+						{
+							key: 'section1',
+							title: 'Overview',
+							content: <Text>Project overview and details</Text>,
+							isDefaultExpanded: true,
+						},
+						{
+							key: 'section2',
+							title: 'Configuration',
+							content: <Text>Application settings and config</Text>,
+						},
+						{
+							key: 'section3',
+							title: 'Advanced',
+							content: <Text>Advanced options and features</Text>,
+						},
+					]}
+					hasMultiple
+				/>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Code Block:</Text>
+				<CodeBlock language="javascript" hasLineNumbers>
+					{`function greet(name) {
+  return \`Hello, \${name}!\`;
+}
+
+console.log(greet('World'));`}
+				</CodeBlock>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Radio Group:</Text>
+				<RadioGroup
+					options={[
+						{label: 'Development', value: 'dev'},
+						{label: 'Staging', value: 'staging'},
+						{label: 'Production', value: 'prod'},
+					]}
+					defaultValue="dev"
+				/>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Switch Controls:</Text>
+				<Box gap={3}>
+					<Switch label="Feature A" isDefaultChecked />
+					<Switch label="Feature B" variant="success" />
+					<Switch label="Feature C" variant="warning" hasStateText />
+				</Box>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Slider Control:</Text>
+				<Slider
+					label="Volume"
+					min={0}
+					max={100}
+					defaultValue={75}
+					hasValueDisplay
+					hasMinMaxLabels
+					formatValue={value => `${value}%`}
+				/>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Tree Structure:</Text>
+				<Tree
+					nodes={[
+						{
+							key: 'root',
+							label: 'src/',
+							children: [
+								{key: 'components', label: 'components/'},
+								{key: 'utils', label: 'utils/'},
+								{key: 'app', label: 'app.tsx'},
+							],
+						},
+					]}
+				/>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Search Input:</Text>
+				<SearchInput
+					placeholder="Search files..."
+					results={[
+						{id: '1', label: 'package.json', description: 'Project config'},
+						{id: '2', label: 'README.md', description: 'Documentation'},
+						{id: '3', label: 'src/app.tsx', description: 'Main app file'},
+					]}
+					hasInstantResults
+					maxResults={3}
 				/>
 			</Box>
 
