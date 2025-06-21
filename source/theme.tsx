@@ -3,6 +3,7 @@ import deepmerge from 'deepmerge';
 import accordionTheme from './components/accordion/theme.js';
 import alertTheme from './components/alert/theme.js';
 import badgeTheme from './components/badge/theme.js';
+import breadcrumbTheme from './components/breadcrumb/theme.js';
 import checkboxTheme from './components/checkbox/theme.js';
 import codeBlockTheme from './components/code-block/theme.js';
 import confirmInputTheme from './components/confirm-input/theme.js';
@@ -45,6 +46,7 @@ export const defaultTheme: Theme = {
 		Accordion: accordionTheme,
 		Alert: alertTheme,
 		Badge: badgeTheme,
+		Breadcrumb: breadcrumbTheme,
 		Checkbox: checkboxTheme,
 		CodeBlock: codeBlockTheme,
 		ConfirmInput: confirmInputTheme,

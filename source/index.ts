@@ -1,5 +1,6 @@
 export * from './components/accordion/index.js';
 export * from './components/badge/index.js';
+export * from './components/breadcrumb/index.js';
 export * from './components/checkbox/index.js';
 export * from './components/code-block/index.js';
 export * from './components/confirm-input/index.js';
