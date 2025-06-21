@@ -3,6 +3,7 @@ import deepmerge from 'deepmerge';
 import alertTheme from './components/alert/theme.js';
 import badgeTheme from './components/badge/theme.js';
 import checkboxTheme from './components/checkbox/theme.js';
+import codeBlockTheme from './components/code-block/theme.js';
 import confirmInputTheme from './components/confirm-input/theme.js';
 import datePickerTheme from './components/date-picker/theme.js';
 import menuTheme from './components/menu/theme.js';
@@ -38,6 +39,7 @@ export const defaultTheme: Theme = {
 		Alert: alertTheme,
 		Badge: badgeTheme,
 		Checkbox: checkboxTheme,
+		CodeBlock: codeBlockTheme,
 		ConfirmInput: confirmInputTheme,
 		DatePicker: datePickerTheme,
 		Menu: menuTheme,

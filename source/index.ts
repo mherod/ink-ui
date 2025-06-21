@@ -1,5 +1,6 @@
 export * from './components/badge/index.js';
 export * from './components/checkbox/index.js';
+export * from './components/code-block/index.js';
 export * from './components/confirm-input/index.js';
 export * from './components/date-picker/index.js';
 export * from './components/unordered-list/index.js';
