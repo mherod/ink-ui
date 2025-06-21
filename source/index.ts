@@ -8,6 +8,7 @@ export * from './components/menu/index.js';
 export * from './components/modal/index.js';
 export * from './components/multi-select/index.js';
 export * from './components/progress-bar/index.js';
+export * from './components/radio-group/index.js';
 export * from './components/select/select.js';
 export * from './components/spinner/index.js';
 export * from './components/table/index.js';
