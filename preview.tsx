@@ -56,12 +56,7 @@ const components: ComponentName[] = [
 	'UnorderedList',
 ];
 
-function ComponentMenu({
-	selectedIndex,
-}: {
-	readonly selectedIndex: number;
-	readonly onSelect: (component: ComponentName) => void;
-}) {
+function ComponentMenu({selectedIndex}: {readonly selectedIndex: number}) {
 	// Navigation handled in parent component
 
 	return (

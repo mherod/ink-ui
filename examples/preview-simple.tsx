@@ -9,10 +9,14 @@ import {render, Box, Text} from 'ink';
 import {
 	Alert,
 	Badge,
+	Checkbox,
 	OrderedList,
 	ProgressBar,
 	Spinner,
 	StatusMessage,
+	Table,
+	Tabs,
+	Toast,
 	UnorderedList,
 } from '../source/index.js';
 
@@ -104,6 +108,56 @@ function ComponentShowcase() {
 						<Text>Feature C</Text>
 					</UnorderedList.Item>
 				</UnorderedList>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Checkboxes:</Text>
+				<Checkbox isChecked label="Completed task" />
+				<Checkbox label="Pending task" />
+				<Checkbox isIndeterminate label="Partially completed" />
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Toast Notifications:</Text>
+				<Toast variant="success">Operation completed successfully!</Toast>
+				<Toast variant="error">Failed to save changes</Toast>
+				<Toast variant="warning">Unsaved changes detected</Toast>
+				<Toast variant="info">New update available</Toast>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Data Table:</Text>
+				<Table
+					columns={[
+						{key: 'name', title: 'Name', width: 15},
+						{key: 'status', title: 'Status', width: 10},
+						{key: 'progress', title: 'Progress', width: 8},
+					]}
+					data={[
+						{name: 'Project Alpha', status: 'Active', progress: '85%'},
+						{name: 'Project Beta', status: 'Pending', progress: '60%'},
+						{name: 'Project Gamma', status: 'Complete', progress: '100%'},
+					]}
+				/>
+			</Box>
+
+			<Box flexDirection="column" gap={1}>
+				<Text bold>Navigation Tabs:</Text>
+				<Tabs
+					items={[
+						{key: 'home', label: 'Home', children: <Text>Home content</Text>},
+						{
+							key: 'settings',
+							label: 'Settings',
+							children: <Text>Settings content</Text>,
+						},
+						{
+							key: 'about',
+							label: 'About',
+							children: <Text>About content</Text>,
+						},
+					]}
+				/>
 			</Box>
 
 			<Box borderTop marginTop={2} paddingTop={1} borderStyle="single">
