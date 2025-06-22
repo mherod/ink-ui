@@ -1,3 +1,4 @@
+import {isDeepStrictEqual} from 'node:util';
 import {
 	useReducer,
 	type Reducer,
@@ -8,11 +9,6 @@ import {
 } from 'react';
 import OptionMap from '../../lib/option-map.js';
 import {type Option} from '../../types.js';
-
-// Simple deep comparison for arrays
-const isDeepStrictEqual = (a: any, b: any): boolean => {
-	return JSON.stringify(a) === JSON.stringify(b);
-};
 
 type State = {
 	/**
