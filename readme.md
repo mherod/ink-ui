@@ -1,13 +1,19 @@
 [![](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
 
-# Ink UI [![test](https://github.com/vadimdemedes/ink-ui/actions/workflows/test.yml/badge.svg)](https://github.com/vadimdemedes/ink-ui/actions/workflows/test.yml)
+# @mherod/ink-ui [![test](https://github.com/mherod/ink-ui/actions/workflows/test.yml/badge.svg)](https://github.com/mherod/ink-ui/actions/workflows/test.yml)
 
-> Collection of customizable UI components for CLIs made with [Ink](https://term.ink).
+> **Maintained fork** of [@inkjs/ui](https://github.com/vadimdemedes/ink-ui) - Collection of customizable UI components for CLIs made with [Ink](https://term.ink).
+
+## About This Fork
+
+This is a fork of the original [@inkjs/ui](https://github.com/vadimdemedes/ink-ui) by [Vadim Demedes](https://github.com/vadimdemedes).
+
+**Original work by:** [Vadim Demedes](https://github.com/vadimdemedes) | **Maintained by:** [Matthew Herod](https://github.com/mherod)
 
 ## Install
 
 ```sh
-npm install @inkjs/ui
+npm install @mherod/ink-ui
 ```
 
 _This assumes you've already set up [Ink](https://term.ink). The easiest way to get started is [create-ink-app](https://github.com/vadimdemedes/create-ink-app)._

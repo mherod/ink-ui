@@ -1,14 +1,33 @@
 {
-	"name": "@inkjs/ui",
-	"version": "2.0.0",
-	"description": "Collection of customizable UI components for CLIs made with Ink",
+	"name": "@mherod/ink-ui",
+	"version": "2.0.1",
+	"description": "Maintained fork of @inkjs/ui - Collection of customizable UI components for CLIs made with Ink",
 	"license": "MIT",
-	"repository": "vadimdemedes/ink-ui",
+	"repository": "mherod/ink-ui",
 	"author": {
 		"name": "Vadim Demedes",
 		"email": "vadimdemedes@hey.com",
 		"url": "https://github.com/vadimdemedes"
 	},
+	"maintainers": [
+		{
+			"name": "Matthew Herod",
+			"url": "https://github.com/mherod"
+		}
+	],
+	"homepage": "https://github.com/mherod/ink-ui",
+	"bugs": {
+		"url": "https://github.com/mherod/ink-ui/issues"
+	},
+	"keywords": [
+		"ink",
+		"ui",
+		"cli",
+		"terminal",
+		"react",
+		"components",
+		"maintained-fork"
+	],
 	"publishConfig": {
 		"access": "public"
 	},
